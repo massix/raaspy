@@ -1,0 +1,4 @@
+Flask
+Flask-Injector
+connexion[swagger-ui]
+waitress

@@ -1,0 +1,124 @@
+swagger: "2.0"
+info:
+  title: Random as a Service
+  description: Service to return a random number or string.
+  version: 1.0.0
+
+basePath: /v1
+
+tags:
+  - name: numbers
+    description: All about random numbers
+  - name: strings
+    description: All about random strings
+
+paths:
+  /number:
+    get:
+      tags: [numbers]
+      operationId: api_number.random.get
+      summary: Returns a random number from 0 to 100
+      produces: [application/json]
+      parameters:
+        - name: p_min
+          in: query
+          required: false
+          type: integer
+        - name: p_max
+          in: query
+          required: false
+          type: integer
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/NumberObject'
+        400:
+          description: OK
+          schema:
+            $ref: '#/definitions/Error'
+  /scrum:
+    get:
+      tags: [numbers]
+      operationId: api_number.random.get_scrum
+      parameters:
+        - name: p_max
+          in: query
+          required: false
+          type: integer
+      summary: Returns a random number in the modified Fibonacci's sequence for Scrum
+      produces: [application/json]
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/NumberObject'
+  /string:
+    get:
+      tags: [strings]
+      operationId: api_string.random.get_random_string
+      summary: Returns a random string
+      parameters:
+        - name: size
+          in: query
+          type: integer
+          pattern: "^[0-9]+"
+          required: false
+        - name: allowed_characters
+          in: query
+          type: string
+          pattern: "^[a-z,]+"
+          required: false
+          description: |
+            Comma-separated list of allowed characters. The names one can use are:
+            first_symbols, numbers, second_symbols, capitol_letters, third_symbols, letters, final_symbols.
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/StringObject'
+
+
+parameters:
+  min:
+    name: p_min
+    in: path
+    type: integer
+    pattern: "^[0-9]+"
+    required: true
+  max:
+    name: p_max
+    in: path
+    type: integer
+    pattern: "^[0-9]+"
+    required: true
+
+definitions:
+  NumberObject:
+    type: object
+    properties:
+      minimum:
+        type: integer
+        description: minimum extension
+        example: 0
+      maximum:
+        type: integer
+        description: maximum extension
+        example: 100
+      type:
+        type: string
+        description: Type of number
+        example: integer
+      result:
+        type: integer
+        description: result of the calculation
+        example: 42
+  StringObject:
+    type: object
+    properties:
+      result: {type: string}
+  Error:
+    type: object
+    properties:
+      code: {type: integer, example: 400}
+      description: {type: string, example: "Maximum has to be higher than Minimum"}
