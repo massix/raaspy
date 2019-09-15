@@ -7,4 +7,4 @@ class Error(object):
     description: str
 
     def serialize(self):
-        return self.__dict__
+        return self.__dict__.copy()
