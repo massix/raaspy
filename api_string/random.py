@@ -14,16 +14,16 @@ def get_random_string(size: int, allowed_characters: str):
     letters = (97, 122)
     final_symbols = (123, 126)
 
-    all = [first_symbols, numbers, second_symbols, capitol_letters, third_symbols, letters, final_symbols]
+    all_allowed = [first_symbols, numbers, second_symbols, capitol_letters, third_symbols, letters, final_symbols]
 
     if size <= 0 or size >= 126:
         size = 32
 
     allowed_characters_list: List[tuple] = []
-    mapping = {k: v for k, v in locals().items() if v in all}
+    mapping = {k: v for k, v in locals().items() if v in all_allowed}
     allowed_characters_list = [v for k, v in mapping.items() if k in allowed_characters.split(',')]
 
-    allowed_characters_list = all if len(allowed_characters_list) == 0 else allowed_characters_list
+    allowed_characters_list = all_allowed if len(allowed_characters_list) == 0 else allowed_characters_list
 
     random_string: str = ""
     for x in range(0, size):

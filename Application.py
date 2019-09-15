@@ -30,8 +30,4 @@ class Application(object):
 
 if __name__ == "__main__":
     a = Application(8080)
-
-    if getenv('environment', 'dev') == 'prod':
-        serve(a.app)
-    else:
-        a.app.run()
+    serve(a.app) if getenv('environment', 'dev') == 'prod' else a.app.run()
